@@ -4,6 +4,7 @@ import tkinter as tkt
 WINDOW_DELETE_PROTOCOL: str = "WM_DELETE_WINDOW"
 
 class Window:
+    # Constructor for the window class
     def __init__(self, width: int, height: int, title: str, closeCallback: Callable[[], Any] | None = None) -> None:
         self.title: str = title
         self.closeCallback: Callable[[], Any] | None = closeCallback
