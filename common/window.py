@@ -38,6 +38,15 @@ class Window:
         if entry.get() == default:
             entry.delete(0, "end")
 
+    def resizeFontCallback(self, event: tkt.Event):
+        # Get the width and height of the container
+        container_width: int = self.window.winfo_width() 
+        container_height: int = self.window.winfo_height()
+        # Calculate a suitable font size based on container dimensions
+        new_font_size: int = min(container_width, container_height) // 40
+        # Configure the element font with the new font size
+        event.widget.configure(font=("Helvetica", new_font_size))
+
     def close(self) -> None:
         # If a custom close callback has been defined, use that too
         if self.closeCallback != None:

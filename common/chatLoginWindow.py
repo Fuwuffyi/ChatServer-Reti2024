@@ -17,49 +17,58 @@ class ChatLoginWindow(Window):
         self.window.configure(bg=BACKGROUND_COLOR)
         # Basic panel to contain all of our ui elements
         panelLogin: tkt.Frame = tkt.Frame(self.window, bg=BACKGROUND_COLOR)
-        panelLogin.pack(fill='both', padx=4, pady=4, expand=True,)
+        panelLogin.pack(fill='both', padx=4, pady=4, expand=True)
         # Status label to tell the user some input errors and such
         self.statusLabelText: tkt.StringVar = tkt.StringVar()
         self.statusLabelText.set("Effettua il login al server.")
         self.statusLabel: tkt.Label = tkt.Label(panelLogin, textvariable=self.statusLabelText, bg=BACKGROUND_COLOR, fg=TEXT_COLOR)
+        self.statusLabel.bind('<Configure>', lambda e: self.resizeFontCallback(e))
         self.statusLabel.pack(side='top', fill='y', expand=True, anchor='nw', padx=2, pady=2)
         # Label for the IP input of the form
         ipLabel: tkt.Label = tkt.Label(panelLogin, text="Server IP: ", bg=BACKGROUND_COLOR, fg=TEXT_COLOR)
+        ipLabel.bind('<Configure>', lambda e: self.resizeFontCallback(e))
         ipLabel.pack(side='top', fill='y', expand=True, anchor='nw', padx=2, pady=2)
         # Input entry for the IP
         self.ipIn: tkt.Entry = tkt.Entry(panelLogin, borderwidth=0, highlightthickness=0, relief='flat', fg=TEXT_COLOR, bg=SECONDARY_COLOR)
         self.ipIn.insert(0, DEFAULT_IP)
         self.ipIn.bind('<FocusIn>', lambda _e: self.entryInCallback(self.ipIn, DEFAULT_IP))
         self.ipIn.bind('<FocusOut>', lambda _e: self.entryOutCallback(self.ipIn, DEFAULT_IP))
+        self.ipIn.bind('<Configure>', lambda e: self.resizeFontCallback(e))
         self.ipIn.pack(side='top', fill='y', expand=True, anchor='nw', padx=2, pady=2)
         self.ipIn.focus()
         # Label for the port input of the form
         portLabel: tkt.Label = tkt.Label(panelLogin, text="Server Port: ", bg=BACKGROUND_COLOR, fg=TEXT_COLOR)
         portLabel.pack(side='top', fill='y', expand=True, anchor='nw', padx=2, pady=2)
+        portLabel.bind('<Configure>', lambda e: self.resizeFontCallback(e))
         # Input entry for the PORT
         self.portIn: tkt.Entry = tkt.Entry(panelLogin, borderwidth=0, highlightthickness=0, relief='flat', fg=TEXT_COLOR, bg=SECONDARY_COLOR)
         self.portIn.insert(0, DEFAULT_PORT)
         self.portIn.bind('<FocusIn>', lambda _e: self.entryInCallback(self.portIn, DEFAULT_PORT))
         self.portIn.bind('<FocusOut>', lambda _e: self.entryOutCallback(self.portIn, DEFAULT_PORT))
+        self.portIn.bind('<Configure>', lambda e: self.resizeFontCallback(e))
         self.portIn.pack(side='top', fill='y', expand=True, anchor='nw', padx=2, pady=2)
         # Label for the username input of the form
         nameLabel: tkt.Label = tkt.Label(panelLogin, text="Username: ", bg=BACKGROUND_COLOR, fg=TEXT_COLOR)
         nameLabel.pack(side='top', fill='y', expand=True, anchor='nw', padx=2, pady=2)
+        nameLabel.bind('<Configure>', lambda e: self.resizeFontCallback(e))
         # Input entry for the username 
         self.nameIn: tkt.Entry = tkt.Entry(panelLogin, borderwidth=0, highlightthickness=0, relief='flat', fg=TEXT_COLOR, bg=SECONDARY_COLOR)
         self.nameIn.insert(0, DEFAULT_NAME)
         self.nameIn.bind('<FocusIn>', lambda e: self.entryInCallback(self.nameIn, DEFAULT_NAME))
         self.nameIn.bind('<FocusOut>', lambda e: self.entryOutCallback(self.nameIn, DEFAULT_NAME))
+        self.nameIn.bind('<Configure>', lambda e: self.resizeFontCallback(e))
         self.nameIn.pack(side='top', fill='y', expand=True, anchor='nw', padx=2, pady=2)
         # Button to confirm the login info to the server 
         buttonConfirm: tkt.Button = tkt.Button(panelLogin, text="Login", borderwidth=0, highlightthickness=0, relief="flat", command=self.loginCallback, fg=TEXT_COLOR, bg=PRIMARY_COLOR)
         buttonConfirm.bind("<FocusIn>", lambda _e: buttonConfirm.configure(fg=TEXT_COLOR, bg=ACCENT_COLOR))
         buttonConfirm.bind("<FocusOut>", lambda _e: buttonConfirm.configure(fg=TEXT_COLOR, bg=PRIMARY_COLOR))
+        buttonConfirm.bind('<Configure>', lambda e: self.resizeFontCallback(e))
         buttonConfirm.pack(side='top', fill='both', expand=True, anchor='nw', padx=2, pady=2);
         # Button to cancel the login and close the window
         buttonCancel: tkt.Button = tkt.Button(panelLogin, text="Cancel", borderwidth=0, highlightthickness=0, relief='flat', command=self.close, fg=TEXT_COLOR, bg=PRIMARY_COLOR)
         buttonCancel.bind("<FocusIn>", lambda _e: buttonCancel.configure(fg=TEXT_COLOR, bg=ACCENT_COLOR))
         buttonCancel.bind("<FocusOut>", lambda _e: buttonCancel.configure(fg=TEXT_COLOR, bg=PRIMARY_COLOR))
+        buttonCancel.bind('<Configure>', lambda e: self.resizeFontCallback(e))
         buttonCancel.pack(side='top', fill='both', expand=True, anchor='nw', padx=2, pady=2);
         # Sets the login callback for the login button 
         self.loginOutCallback: Callable[[ChatLoginWindow, str, int, str], None] = loginOutCallback
