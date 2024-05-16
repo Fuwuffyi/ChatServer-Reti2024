@@ -1,6 +1,8 @@
 from typing import Callable, Any
 import tkinter as tkt
 
+from common.defaultParams import TEXT_COLOR, SECONDARY_COLOR, ACCENT_COLOR
+
 WINDOW_DELETE_PROTOCOL: str = "WM_DELETE_WINDOW"
 
 class Window:
@@ -26,11 +28,13 @@ class Window:
 
     # Set an entry's default value if they haven't been filled yet
     def entryOutCallback(self, entry: tkt.Entry, default: str) -> None:
+        entry.configure(fg=TEXT_COLOR, bg=SECONDARY_COLOR)
         if entry.get() == '':
             entry.insert(0, default)
 
     # Clear an entry's values if they haven't been filled yet
     def entryInCallback(self, entry: tkt.Entry, default: str) -> None:
+        entry.configure(fg=TEXT_COLOR, bg=ACCENT_COLOR)
         if entry.get() == default:
             entry.delete(0, "end")
 

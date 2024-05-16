@@ -1,12 +1,14 @@
 # Used to generate color palettes
 import colorsys
+# Used to get a random color
 import random
 
-# Converts an hedadecimal color to RGB
+# Converts an hexadecimal color to RGB
 def hexToRgb(hex_color: str) -> tuple[float, ...]:
     hex_color = hex_color.lstrip('#')
     return tuple(int(hex_color[i:i+2], 16) / 255.0 for i in (0, 2, 4))
 
+# Converts an rgb color to hexadecimal
 def rgbToHex(rgb_color: tuple[float, float, float]) -> str:
     return '#{:02x}{:02x}{:02x}'.format(
         int(rgb_color[0] * 255),
@@ -14,9 +16,11 @@ def rgbToHex(rgb_color: tuple[float, float, float]) -> str:
         int(rgb_color[2] * 255)
     )
 
+# Generates a random hex color
 def generateRandomHexColor() -> str:
     return '#{:06x}'.format(random.randint(0, 0xFFFFFF))
 
+# Generates a random color palette
 def generatePalette() -> dict[str, str]:
     # Get a random color's hls values
     base_color: str = generateRandomHexColor()
