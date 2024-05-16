@@ -2,7 +2,8 @@ from typing import Final, Callable
 import re
 import tkinter as tkt
 from common.window import Window
-from common.defaultParams import * 
+from common.defaultParams import DEFAULT_IP, DEFAULT_PORT, DEFAULT_NAME
+from common.defaultParams import TEXT_COLOR, BACKGROUND_COLOR, PRIMARY_COLOR, SECONDARY_COLOR, ACCENT_COLOR, ERROR_COLOR
 
 LOGIN_WINDOW_DIMS: Final[tuple[int, int]] = (300, 375)
 LOGIN_WINDOW_TITLE: Final[str] = "Chat Login"
@@ -59,7 +60,7 @@ class ChatLoginWindow(Window):
     
     # Changes the login status message in a clear way
     def setStatusMessage(self, message: str, error: bool = False):
-        self.statusLabel.config(fg=ERROR_COLOR if error else STATUS_COLOR)
+        self.statusLabel.config(fg=ERROR_COLOR if error else TEXT_COLOR)
         self.statusLabelText.set(message)
     
     # Method to get all the info when logging in, and checking for their validity

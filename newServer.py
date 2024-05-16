@@ -2,7 +2,7 @@
 
 from socket import AF_INET, AddressInfo, socket, SOCK_STREAM
 from threading import Thread
-from common.defaultParams import *
+from common.defaultParams import BUFFER_SIZE, DEFAULT_PORT, COMMAND_PREFIX, COMMAND_QUIT
 
 def handleClient(client: socket) -> None:
     name: str = connectedClients[client][1]

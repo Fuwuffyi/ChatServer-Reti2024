@@ -8,7 +8,7 @@ import tkinter as tkt
 from threading import Thread
 from common.chatLoginWindow import ChatLoginWindow
 from common.chatWindow import ChatWindow
-from common.defaultParams import *
+from common.defaultParams import BUFFER_SIZE, COMMAND_PREFIX, COMMAND_QUIT
 
 def closeChatCallback(client: Socket) ->None:
     client.send(bytes(COMMAND_PREFIX + COMMAND_QUIT, "utf8"))

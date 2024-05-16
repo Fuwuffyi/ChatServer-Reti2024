@@ -3,6 +3,7 @@ import tkinter as tkt
 from socket import socket as Socket
 from common.window import Window
 from common.defaultParams import * 
+from common.defaultParams import TEXT_COLOR, BACKGROUND_COLOR, PRIMARY_COLOR, SECONDARY_COLOR, ACCENT_COLOR
 
 CHAT_WINDOW_DIMS: tuple[int, int] = (640, 350)
 CHAT_WINDOW_TITLE: str = "Chat"
