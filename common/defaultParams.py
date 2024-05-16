@@ -12,12 +12,13 @@ DEFAULT_PORT: Final[str] = "53000"
 DEFAULT_NAME: Final[str] = "Username"
 
 # Palette stuff
-COLOR_PALETTE: Final[list[str]] = generatePalette()
-TEXT_COLOR: Final[str] = COLOR_PALETTE[0]
-BACKGROUND_COLOR: Final[str] = COLOR_PALETTE[1]
-PRIMARY_COLOR: Final[str] = COLOR_PALETTE[2]
-SECONDARY_COLOR: Final[str] = COLOR_PALETTE[3]
-ACCENT_COLOR: Final[str] = COLOR_PALETTE[4]
+COLOR_PALETTE: Final[dict[str, str]] = generatePalette()
+TEXT_COLOR: Final[str] = COLOR_PALETTE['text']
+BACKGROUND_COLOR: Final[str] = COLOR_PALETTE['background']
+PRIMARY_COLOR: Final[str] = COLOR_PALETTE['primary']
+SECONDARY_COLOR: Final[str] = COLOR_PALETTE['secondary']
+ACCENT_COLOR: Final[str] = COLOR_PALETTE['accent']
+
 # Some colors for the status messages 
 STATUS_COLOR: Final[str] = TEXT_COLOR
 ERROR_COLOR: Final[str] = "red"

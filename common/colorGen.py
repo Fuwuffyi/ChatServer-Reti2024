@@ -17,17 +17,44 @@ def rgbToHex(rgb_color: tuple[float, float, float]) -> str:
 def generateRandomHexColor() -> str:
     return '#{:06x}'.format(random.randint(0, 0xFFFFFF))
 
-def generatePalette() -> list[str]:
-    """Generate a palette of five colors using an analogous color scheme."""
+def generatePalette() -> dict[str, str]:
+    # Get a random color's hls values
     base_color: str = generateRandomHexColor()
     base_rgb: tuple[float, ...] = hexToRgb(base_color)
-    base_hsv: tuple[float, float, float] = colorsys.rgb_to_hsv(*base_rgb)
+    base_hls: tuple[float, float, float] = colorsys.rgb_to_hls(*base_rgb)
     # Define angles for analogous colors
     angles: list[int] = [-30, -15, 0, 15, 30]
     palette: list[str] = []
     for angle in angles:
-        hue: float = (base_hsv[0] + angle / 360) % 1.0
-        analog_rgb: tuple[float, float, float] = colorsys.hsv_to_rgb(hue, base_hsv[1], base_hsv[2])
+        hue: float = (base_hls[0] + angle / 360) % 1.0
+        # For text color
+        lightness = 0.93
+        saturation = 0.89
+        # For background color
+        if angle == -15:
+            lightness = 0.04
+            saturation = 0.89
+        # For primary color
+        elif angle == 0:
+            lightness = 0.73
+            saturation = 0.90
+        # For secondary color
+        elif angle == 15:
+            lightness = 0.34
+            saturation = 0.91
+        # For accent color
+        elif angle == 30:
+            lightness = 0.57
+            saturation = 0.91
+        # Put those colors into rgb, then to hex
+        analog_rgb: tuple[float, float, float] = colorsys.hls_to_rgb(hue, lightness, saturation)
         palette.append(rgbToHex(analog_rgb))
-    return palette
+    # Return the dict palette 
+    return {
+        "text": palette[0],
+        "background": palette[1],
+        "primary": palette[2],
+        "secondary": palette[3],
+        "accent": palette[4],
+    }
 
