@@ -42,7 +42,7 @@ def serverConnectCallback(win: ChatLoginWindow, ip: str, port: int, name: str) -
 
 def sendMessageCallback(clientSocket: Socket, input: tkt.Entry) -> None:
     clientSocket.send(bytes(input.get(), "utf8"))
-    input.delete(0, "END")
+    input.delete(0, "end")
 
 def messageCollector(clientSocket: Socket, chatListbox: tkt.Listbox) -> None:
     chatShouldClose: bool = False
