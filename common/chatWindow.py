@@ -52,11 +52,11 @@ class ChatWindow(Window):
         self.messageIn.focus()
         # Button to quit the chat 
         buttonQuit: tkt.Button = tkt.Button(panelChatButtons, text="Quit", borderwidth=0, highlightthickness=0, command=self.close, fg=TEXT_COLOR, bg=PRIMARY_COLOR)
-        buttonQuit.bind("<Enter>", lambda _e: buttonQuit.configure(fg=TEXT_COLOR, bg=ACCENT_COLOR))
-        buttonQuit.bind("<Leave>", lambda _e: buttonQuit.configure(fg=TEXT_COLOR, bg=PRIMARY_COLOR))
+        buttonQuit.bind("<FocusIn>", lambda _e: buttonQuit.configure(fg=TEXT_COLOR, bg=ACCENT_COLOR))
+        buttonQuit.bind("<FocusOut>", lambda _e: buttonQuit.configure(fg=TEXT_COLOR, bg=PRIMARY_COLOR))
         buttonQuit.grid(column=0, row=0, padx=2, pady=2, sticky='nsw')
         # Button to send the message
         buttonSend: tkt.Button = tkt.Button(panelChatButtons, text="Send", borderwidth=0, highlightthickness=0, command=lambda: sendCallback(socket, self.messageIn), fg=TEXT_COLOR, bg=PRIMARY_COLOR)
-        buttonSend.bind("<Enter>", lambda _e: buttonSend.configure(fg=TEXT_COLOR, bg=ACCENT_COLOR))
-        buttonSend.bind("<Leave>", lambda _e: buttonSend.configure(fg=TEXT_COLOR, bg=PRIMARY_COLOR))
+        buttonSend.bind("<FocusIn>", lambda _e: buttonSend.configure(fg=TEXT_COLOR, bg=ACCENT_COLOR))
+        buttonSend.bind("<FocusOut>", lambda _e: buttonSend.configure(fg=TEXT_COLOR, bg=PRIMARY_COLOR))
         buttonSend.grid(column=1, row=0, padx=2, pady=2, sticky='nse')

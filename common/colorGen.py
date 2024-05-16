@@ -10,11 +10,7 @@ def hexToRgb(hex_color: str) -> tuple[float, ...]:
 
 # Converts an rgb color to hexadecimal
 def rgbToHex(rgb_color: tuple[float, float, float]) -> str:
-    return '#{:02x}{:02x}{:02x}'.format(
-        int(rgb_color[0] * 255),
-        int(rgb_color[1] * 255),
-        int(rgb_color[2] * 255)
-    )
+    return '#{:02x}{:02x}{:02x}'.format(int(rgb_color[0] * 255), int(rgb_color[1] * 255), int(rgb_color[2] * 255))
 
 # Generates a random hex color
 def generateRandomHexColor() -> str:

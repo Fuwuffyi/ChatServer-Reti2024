@@ -21,7 +21,7 @@ ACCENT_COLOR: Final[str] = COLOR_PALETTE['accent']
 
 # Some colors for the status messages 
 STATUS_COLOR: Final[str] = TEXT_COLOR
-ERROR_COLOR: Final[str] = "red"
+ERROR_COLOR: Final[str] = "#ff0000"
 
 # Command related constants
 COMMAND_PREFIX: Final[str] = "/"
