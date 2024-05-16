@@ -10,7 +10,7 @@ LOGIN_WINDOW_TITLE: Final[str] = "Chat Login"
 
 class ChatLoginWindow(Window):
     # Constructor for the login page of our application
-    def __init__(self, loginOutCallback: Callable[[Window, str, int, str], None]) -> None:
+    def __init__(self, loginOutCallback: Callable[['ChatLoginWindow', str, int, str], None]) -> None:
         # Creates the underlying window
         Window.__init__(self, LOGIN_WINDOW_DIMS[0], LOGIN_WINDOW_DIMS[1], LOGIN_WINDOW_TITLE);
         # Give the window the default bg color
