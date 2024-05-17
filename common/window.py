@@ -1,6 +1,5 @@
 from typing import Callable, Any
 import tkinter as tkt
-from tkinter import font
 
 from common.defaultParams import TEXT_COLOR, TEXT_COLOR_DARK, SECONDARY_COLOR, ACCENT_COLOR
 

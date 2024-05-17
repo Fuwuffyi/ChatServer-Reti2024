@@ -60,14 +60,14 @@ class ChatLoginWindow(Window):
         self.nameIn.pack(side='top', fill='y', expand=True, anchor='nw', padx=2, pady=2)
         # Button to confirm the login info to the server 
         buttonConfirm: tkt.Button = tkt.Button(panelLogin, text="Login", borderwidth=0, highlightthickness=0, relief="flat", command=self.loginCallback, fg=TEXT_COLOR_DARK, bg=PRIMARY_COLOR)
-        buttonConfirm.bind("<FocusIn>", lambda _e: buttonConfirm.configure(fg=TEXT_COLOR_DARK, bg=ACCENT_COLOR))
-        buttonConfirm.bind("<FocusOut>", lambda _e: buttonConfirm.configure(fg=TEXT_COLOR_DARK, bg=PRIMARY_COLOR))
+        buttonConfirm.bind("<FocusIn>", lambda e: e.widget.configure(fg=TEXT_COLOR_DARK, bg=ACCENT_COLOR))
+        buttonConfirm.bind("<FocusOut>", lambda e: e.widget.configure(fg=TEXT_COLOR_DARK, bg=PRIMARY_COLOR))
         buttonConfirm.bind('<Configure>', lambda e: self.resizeFontCallback(e))
         buttonConfirm.pack(side='top', fill='both', expand=True, anchor='nw', padx=2, pady=2);
         # Button to cancel the login and close the window
         buttonCancel: tkt.Button = tkt.Button(panelLogin, text="Cancel", borderwidth=0, highlightthickness=0, relief='flat', command=self.close, fg=TEXT_COLOR_DARK, bg=PRIMARY_COLOR)
-        buttonCancel.bind("<FocusIn>", lambda _e: buttonCancel.configure(fg=TEXT_COLOR_DARK, bg=ACCENT_COLOR))
-        buttonCancel.bind("<FocusOut>", lambda _e: buttonCancel.configure(fg=TEXT_COLOR_DARK, bg=PRIMARY_COLOR))
+        buttonCancel.bind("<FocusIn>", lambda e: e.widget.configure(fg=TEXT_COLOR_DARK, bg=ACCENT_COLOR))
+        buttonCancel.bind("<FocusOut>", lambda e: e.widget.configure(fg=TEXT_COLOR_DARK, bg=PRIMARY_COLOR))
         buttonCancel.bind('<Configure>', lambda e: self.resizeFontCallback(e))
         buttonCancel.pack(side='top', fill='both', expand=True, anchor='nw', padx=2, pady=2);
         # Sets the login callback for the login button 
