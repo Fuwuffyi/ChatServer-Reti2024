@@ -43,12 +43,12 @@ def serverConnectCallback(win: ChatLoginWindow, ip: str, port: int, name: str) -
 
 def sendMessageCallback(clientSocket: Socket, input: tkt.Entry) -> None:
     msg: str = input.get()
+    # If the message is not a command, send it to the server
     if not COMMAND_PREFIX in msg:
         clientSocket.send(bytes(input.get(), "utf8"))
         input.delete(0, "end")
     elif msg == COMMAND_PREFIX + COMMAND_QUIT:
         closeChatCallback(clientSocket)
-
 
 def messageCollector(clientSocket: Socket, chatListbox: tkt.Listbox) -> None:
     chatShouldClose: bool = False
