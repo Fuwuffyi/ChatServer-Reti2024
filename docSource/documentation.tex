@@ -1,0 +1,155 @@
+\documentclass[12pt]{article}
+% Packages for styling
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{xcolor}
+% Page layout
+\geometry{a4paper, margin=1in}
+% Header and footer styling
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\textit{Chat client-server} \hspace{5pt} \textbullet \hspace{5pt} \textit{Palazzini Luca}}
+\fancyfoot[C]{\thepage}
+% Code snippet stylings
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=true,                  
+    tabsize=4
+}
+\lstset{style=mystyle}
+% Title definition
+\title{Programmazione di Reti \\ Chat client-server}
+\author{Palazzini Luca}
+% Start of the document
+\begin{document}
+\maketitle
+\section{Funzionamento del sistema}
+Il server utilizza un funzionamento a socket per mantenere una comunicazione fra il server ed i client.
+%
+Per assicurarsi che i client riescano a comunicare con il server contemporaneamente si utilizzano thread, sia lato client che lato server. 
+\subsection{Specifiche lato server}
+A lato \textbf{server}, si ha un thread per client, per assicurarsi la comunicazione indipendente fra tutti i client.
+\begin{lstlisting}[language=Python, caption=Dizionario server]
+while not shouldClose:
+    try:
+        # When a new client joins, get the data
+        clientData: tuple[socket, AddressInfo] = server.accept()
+        clientSocket: socket = clientData[0]
+# ----- other server related code ----- #
+        clientThread: Thread = Thread(target=lambda: handleClient(clientSocket))
+        clientThreads.append(clientThread)
+        clientThread.start()
+    except KeyboardInterrupt:
+        # In case there is a keyboard interrupt, end the communications
+        shouldClose = True
+    except Exception as e:
+        # In any exception, end the communications
+        print(e)
+        shouldClose = True
+\end{lstlisting}
+Inoltre utilizza un dizionario per contenere le informazioni relative ad I client: socket, informazioni relative al suo indirizzo ip, ed il suo username.
+\begin{lstlisting}[language=Python, caption=Dizionario server]
+# Dictionary to keep all the clients in one structure
+    connectedClients: dict[socket, tuple[AddressInfo, str]] = {}
+# ----- other server related code ----- #
+    # When a new client joins, get the data
+    clientData: tuple[socket, AddressInfo] = server.accept()
+    clientAddressInfo: AddressInfo = clientData[1]
+    # Read the new client's name and broadcast it to the chat
+    name: str = clientSocket.recv(BUFFER_SIZE).decode("utf8")
+    connectedClients[clientSocket] = (clientAddressInfo, name)
+\end{lstlisting}
+Ogni volta che un client si disconnette, esso viene rimosso dal dizionario e viene terminato il suo thread.
+\begin{lstlisting}[language=Python, caption=Logout del client]
+if msg == COMMAND_PREFIX + COMMAND_QUIT:
+# ----- other server related code ----- #
+    del connectedClients[client]
+    client.close()
+\end{lstlisting}
+\subsection{Specifiche lato client}
+A lato \textbf{client}, viene creato un thread apposito una volta che viene stabilita la  connessione con il server. Questo thread servirà per assicurarsi solamente la funzionalità separata fra l'ascolto di messaggi nuovi, e il funzionamento della GUI.
+\\
+La pagina di login contiene già informazioni di default relative ad il server di default, queste vengono eliminate quando ci si clicca sopra
+\\
+La GUI utilizza diverse callback functions per mandare messaggi dalla GUI al socket
+\begin{itemize}
+    \item chatCloseCallback (per quando la schermata della chat viene chiusa)
+    \item serverConnectCallback (quando l'user ha dato le informazioni per il login, tenta a fare un accesso)
+    \item sendMessageCallback (per mandare un messaggio al server una volta premuto "enter" o il tasto "send"
+\end{itemize}
+\section{Utilizzo del codice}
+Il codice non richiede alcuna libreria o applicazione aggiuntiva oltre a quelle già presenti nella repository. 
+\\
+Nonostante ciò queste sono le librerie utilizzate (native di python3) nel progetto:
+\begin{itemize}
+  \item Python 3.x
+  \item Threading (per rendere l'applicazione multithreaded)
+  \item Socket (per la gestione delle connessioni client-server)
+  \item Errno (per il controllo di errori dei socket)
+  \item Tkinter (utilizzata per la GUI)
+  \item Typing (per aggiungere type annotations al codice)
+  \item Re (per la gestione di "regular expressions" in python, ovvero per controllare la correttezza dell'input dell'utente)
+  \item Colorsys (per la gestione migliorata dei colori)
+  \item Random (per una generazione randomica dei colori)
+\end{itemize}
+Tutte le variabili principali utilizzate nel codice si trovano nel file common/defaultParams.py, includendo:
+\begin{itemize}
+    \item La dimensione del buffer (1024 bytes)
+    \item Il default IP (127.0.0.1, ovvero localhost)
+    \item La porta default (53000)
+\end{itemize}
+Seguono sotto i passaggi per eseguire il codice correttamente:
+\begin{enumerate}
+    \item Eseguire lo script lato server (chatServer.py) su un terminale:
+\begin{lstlisting}[language=Bash, caption=Esecuzione lato server]
+./chatServer.py
+# OR
+python chatServer.py
+\end{lstlisting}
+    \item Da qui il server scriverà in console di essere stato eseguito.
+    \item Eseguire poi una o più istanze dello script lato client (chatClient.py) per utilizzare la chat:
+\begin{lstlisting}[language=Bash, caption=Esecuzione lato client]
+./chatClient.py
+# OR
+python chatClient.py
+\end{lstlisting}
+    \item Da qui il client richiederà tre cose:
+    \begin{enumerate}
+        \item L'ip del server
+        \item La porta del server
+        \item L'username da utilizzare (' ' non ammesso)
+    \end{enumerate}
+    \item Una volta passate queste informazioni al client, esso potrà entrare nella chat (affinchè le informazioni siano corrette), e verrà aperta una nuova finestra contenente la schermata della chat.
+    \item Da qui, basta inserire il messaggio che si vuole mandare nell'apposito input
+    \item Premere invio o il tasto "send" per inviare il messaggio.
+    \item Per uscire dalla chat basta premere il tasto "Quit" o chiudere la finestra, e si verrà automaticamente rimossi dal server.
+    \item Da qui si può chiudere il server.
+\end{enumerate}
+Nel caso il server venga chiuso mentre ci sono ancora client in ascolto, esso manderà il messaggio di "/quit" a tutti i client rimanenti in ascolto (notare come questo non chiuderà la finestra del client).
+\section{Considerazioni aggiuntive}
+\begin{itemize}
+\item Nella creazione del programma ho cercato di creare una GUI che sia "responsive" ovvero che più la finestra è grande, più i contenuti prendono più spazio sullo schermo.
+\item Ho cercato di gestire la maggior parte delle eccezioni causate da socket o chiusure di finestre e kill di processi
+\item I colori della GUI della chat sono generati randomicamente, scegliendo un colore casuale, e prendendo altri 4 colori analoghi (ruotando la routa dei colori di $\pm 30^\circ, \pm15^\circ$)
+\end{itemize}
+\end{document}
+
