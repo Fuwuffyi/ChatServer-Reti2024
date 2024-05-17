@@ -10,6 +10,7 @@ from common.chatLoginWindow import ChatLoginWindow
 from common.chatWindow import ChatWindow
 from common.defaultParams import BUFFER_SIZE, COMMAND_PREFIX, COMMAND_QUIT
 
+# Whenever the chat closes this function gets called
 def closeChatCallback(client: Socket) ->None:
     client.send(bytes(COMMAND_PREFIX + COMMAND_QUIT, "utf8"))
     client.close()

@@ -14,6 +14,7 @@ DEFAULT_NAME: Final[str] = "Username"
 # Palette stuff
 COLOR_PALETTE: Final[dict[str, str]] = generatePalette()
 TEXT_COLOR: Final[str] = COLOR_PALETTE['text']
+TEXT_COLOR_DARK: Final[str] = COLOR_PALETTE['background']
 BACKGROUND_COLOR: Final[str] = COLOR_PALETTE['background']
 PRIMARY_COLOR: Final[str] = COLOR_PALETTE['primary']
 SECONDARY_COLOR: Final[str] = COLOR_PALETTE['secondary']

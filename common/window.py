@@ -1,7 +1,8 @@
 from typing import Callable, Any
 import tkinter as tkt
+from tkinter import font
 
-from common.defaultParams import TEXT_COLOR, SECONDARY_COLOR, ACCENT_COLOR
+from common.defaultParams import TEXT_COLOR, TEXT_COLOR_DARK, SECONDARY_COLOR, ACCENT_COLOR
 
 WINDOW_DELETE_PROTOCOL: str = "WM_DELETE_WINDOW"
 
@@ -27,14 +28,16 @@ class Window:
         self.window.geometry(f"{width}x{height}")
 
     # Set an entry's default value if they haven't been filled yet
-    def entryOutCallback(self, entry: tkt.Entry, default: str) -> None:
+    def entryOutCallback(self, event: tkt.Event, default: str) -> None:
+        entry: tkt.Entry = event.widget
         entry.configure(fg=TEXT_COLOR, bg=SECONDARY_COLOR)
         if entry.get() == '':
             entry.insert(0, default)
 
     # Clear an entry's values if they haven't been filled yet
-    def entryInCallback(self, entry: tkt.Entry, default: str) -> None:
-        entry.configure(fg=TEXT_COLOR, bg=ACCENT_COLOR)
+    def entryInCallback(self, event: tkt.Event, default: str) -> None:
+        entry: tkt.Entry = event.widget
+        entry.configure(fg=TEXT_COLOR_DARK, bg=ACCENT_COLOR)
         if entry.get() == default:
             entry.delete(0, "end")
 
@@ -45,7 +48,7 @@ class Window:
         # Calculate a suitable font size based on container dimensions
         new_font_size: int = min(container_width, container_height) // 40
         # Configure the element font with the new font size
-        event.widget.configure(font=("Helvetica", new_font_size))
+        event.widget.configure(font=("Noto Sans Mono", new_font_size))
 
     def close(self) -> None:
         # If a custom close callback has been defined, use that too

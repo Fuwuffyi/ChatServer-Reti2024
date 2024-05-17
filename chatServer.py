@@ -44,7 +44,7 @@ if __name__ == "__main__":
     # Create the local server socket
     server: socket = socket(AF_INET, SOCK_STREAM)
     server.bind(("", int(DEFAULT_PORT)))
-    server.listen(5)
+    server.listen(2)
     print(f"Local server created at port {DEFAULT_PORT}")
     # List of all the run connections
     clientThreads: list[Thread] = []

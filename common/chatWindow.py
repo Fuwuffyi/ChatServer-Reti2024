@@ -3,7 +3,7 @@ import tkinter as tkt
 from socket import socket as Socket
 from common.window import Window
 from common.defaultParams import * 
-from common.defaultParams import TEXT_COLOR, BACKGROUND_COLOR, PRIMARY_COLOR, SECONDARY_COLOR, ACCENT_COLOR
+from common.defaultParams import TEXT_COLOR, TEXT_COLOR_DARK, BACKGROUND_COLOR, PRIMARY_COLOR, SECONDARY_COLOR, ACCENT_COLOR
 
 CHAT_WINDOW_DIMS: tuple[int, int] = (640, 350)
 CHAT_WINDOW_TITLE: str = "Chat"
@@ -46,21 +46,21 @@ class ChatWindow(Window):
         # Message input as an entry 
         self.messageIn: tkt.Entry = tkt.Entry(panelChatText, borderwidth=0, highlightthickness=0, fg=TEXT_COLOR, bg=SECONDARY_COLOR)
         self.messageIn.insert(0, "Inserisci il messaggio")
-        self.messageIn.bind('<FocusIn>', lambda e: self.entryInCallback(self.messageIn, "Inserisci il messaggio"))
-        self.messageIn.bind('<FocusOut>', lambda e: self.entryOutCallback(self.messageIn, "Inserisci il messaggio"))
-        self.messageIn.bind('<Return>', lambda e: sendCallback(socket, self.messageIn))
+        self.messageIn.bind('<FocusIn>', lambda e: self.entryInCallback(e, "Inserisci il messaggio"))
+        self.messageIn.bind('<FocusOut>', lambda e: self.entryOutCallback(e, "Inserisci il messaggio"))
+        self.messageIn.bind('<Return>', lambda _e: sendCallback(socket, self.messageIn))
         self.messageIn.bind('<Configure>', lambda e: self.resizeFontCallback(e))
         self.messageIn.grid(column=0, row=1, padx=2, pady=2, sticky='sew')
         self.messageIn.focus()
         # Button to quit the chat 
-        buttonQuit: tkt.Button = tkt.Button(panelChatButtons, text="Quit", borderwidth=0, highlightthickness=0, command=self.close, fg=TEXT_COLOR, bg=PRIMARY_COLOR)
+        buttonQuit: tkt.Button = tkt.Button(panelChatButtons, text="Quit", borderwidth=0, highlightthickness=0, command=self.close, fg=TEXT_COLOR_DARK, bg=PRIMARY_COLOR)
         buttonQuit.bind("<FocusIn>", lambda _e: buttonQuit.configure(fg=TEXT_COLOR, bg=ACCENT_COLOR))
-        buttonQuit.bind("<FocusOut>", lambda _e: buttonQuit.configure(fg=TEXT_COLOR, bg=PRIMARY_COLOR))
+        buttonQuit.bind("<FocusOut>", lambda _e: buttonQuit.configure(fg=TEXT_COLOR_DARK, bg=PRIMARY_COLOR))
         buttonQuit.bind('<Configure>', lambda e: self.resizeFontCallback(e))
         buttonQuit.grid(column=0, row=0, padx=2, pady=2, sticky='nsw')
         # Button to send the message
-        buttonSend: tkt.Button = tkt.Button(panelChatButtons, text="Send", borderwidth=0, highlightthickness=0, command=lambda: sendCallback(socket, self.messageIn), fg=TEXT_COLOR, bg=PRIMARY_COLOR)
+        buttonSend: tkt.Button = tkt.Button(panelChatButtons, text="Send", borderwidth=0, highlightthickness=0, command=lambda: sendCallback(socket, self.messageIn), fg=TEXT_COLOR_DARK, bg=PRIMARY_COLOR)
         buttonSend.bind("<FocusIn>", lambda _e: buttonSend.configure(fg=TEXT_COLOR, bg=ACCENT_COLOR))
-        buttonSend.bind("<FocusOut>", lambda _e: buttonSend.configure(fg=TEXT_COLOR, bg=PRIMARY_COLOR))
+        buttonSend.bind("<FocusOut>", lambda _e: buttonSend.configure(fg=TEXT_COLOR_DARK, bg=PRIMARY_COLOR))
         buttonSend.bind('<Configure>', lambda e: self.resizeFontCallback(e))
         buttonSend.grid(column=1, row=0, padx=2, pady=2, sticky='nse')
